@@ -64,7 +64,7 @@ window.removeImage = function(type) {
         document.getElementById('heroPlaceholder').classList.remove('hidden');
         document.getElementById('heroUpload').value = '';
     } else if (type === 'product') {
-        document.getElementById('previewProduct').src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+        document.getElementById('previewProduct').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         document.getElementById('productPreview').classList.add('hidden');
         document.getElementById('productPlaceholder').classList.remove('hidden');
         document.getElementById('productUpload').value = '';
