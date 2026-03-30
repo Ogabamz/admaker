@@ -123,26 +123,43 @@ window.updateCTATextColor = function(color) {
 window.changeTemplate = function(style) {
     const container = document.getElementById('adContainer');
     const headline = document.getElementById('previewHeadline');
+    const bodyText = document.getElementById('previewBody');
+    const brandText = document.getElementById('previewBrand');
+
+    // Reset classes
+    container.classList.remove('text-black', 'text-white');
+    if(bodyText) {
+        bodyText.classList.remove('text-slate-800', 'text-slate-200');
+    }
 
     if (style === 'dark') {
         container.style.backgroundColor = '#0B2A3A';
         headline.style.color = 'white';
-    } else if (style === 'green') {
-        container.style.backgroundColor = '#064e3b';
-        headline.style.color = '#ecfdf5';
+        container.classList.add('text-white');
+        if(bodyText) bodyText.classList.add('text-slate-200');
+        if(brandText) brandText.style.color = 'white';
+    } else if (style === 'yellow') {
+        container.style.backgroundColor = '#facc15'; // Tailwind yellow-400
+        headline.style.color = 'black';
+        container.classList.add('text-black');
+        if(bodyText) bodyText.classList.add('text-slate-800');
+        if(brandText) brandText.style.color = 'black';
     } else if (style === 'purple') {
         container.style.backgroundColor = '#581c87';
         headline.style.color = '#faf5ff';
+        container.classList.add('text-white');
+        if(bodyText) bodyText.classList.add('text-slate-200');
+        if(brandText) brandText.style.color = 'white';
     }
 }
 
 // Reset
 window.resetTemplate = function() {
-    document.getElementById('headlineInput').value = "THE 'OGA' OF THE HOUSE CANNOT AFFORD TO BREAK DOWN.";
-    document.getElementById('bodyInput').value = "Your family relies on your strength. Natural Heart Care gives you the internal engine overhaul you need to stay active, productive, and in charge for them.";
-    document.getElementById('brandName').value = "NATURAL HEART CARE";
-    document.getElementById('ctaInput').value = "START YOUR HEART CARE JOURNEY";
-    document.getElementById('websiteInput').value = "naturalheartcare.com.ng";
+    document.getElementById('headlineInput').value = "YOUR CATCHY HEADLINE GOES RIGHT HERE.";
+    document.getElementById('bodyInput').value = "Replace this text with your compelling offer. Highlight the *key benefits* of your product and explain why your customers need it now.";
+    document.getElementById('brandName').value = "YOUR BRAND";
+    document.getElementById('ctaInput').value = "GET STARTED NOW";
+    document.getElementById('websiteInput').value = "yourwebsite.com";
 
     // Trigger updates
     document.getElementById('headlineInput').dispatchEvent(new Event('input'));
@@ -157,7 +174,7 @@ window.resetTemplate = function() {
     document.getElementById('logoPlaceholder').classList.remove('hidden');
     document.getElementById('previewLogo').src = 'https://cdn-icons-png.flaticon.com/512/833/833472.png';
 
-    changeTemplate('dark');
+    changeTemplate('yellow');
 }
 
 import domtoimage from 'dom-to-image';
