@@ -5,9 +5,11 @@ document.getElementById('headlineInput').addEventListener('input', (e) => {
 
 document.getElementById('bodyInput').addEventListener('input', (e) => {
     const text = e.target.value;
-    // Simple logic to highlight text between quotes or specific keywords
-    const highlighted = text.replace(/"([^"]*)"/g, '"<span class="text-yellow-400 font-semibold">$1</span>"')
-        .replace(/\*([^*]*)\*/g, '<span class="text-yellow-400 font-semibold">$1</span>');
+    const highlightColorPicker = document.getElementById('highlightColor');
+    const highlightColor = highlightColorPicker ? highlightColorPicker.value : '#ef4444';
+    
+    // Replace text inside *asterisks*
+    const highlighted = text.replace(/\*([^*]*)\*/g, `<span id="previewHighlight" class="preview-highlight font-bold" style="color: ${highlightColor};">$1</span>`);
     document.getElementById('previewBody').innerHTML = highlighted;
 });
 
@@ -62,7 +64,7 @@ window.removeImage = function(type) {
         document.getElementById('heroPlaceholder').classList.remove('hidden');
         document.getElementById('heroUpload').value = '';
     } else if (type === 'product') {
-        document.getElementById('previewProduct').src = '';
+        document.getElementById('previewProduct').src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
         document.getElementById('productPreview').classList.add('hidden');
         document.getElementById('productPlaceholder').classList.remove('hidden');
         document.getElementById('productUpload').value = '';
@@ -109,7 +111,10 @@ window.formatText = function(type) {
 
 // Color updates
 window.updateHighlightColor = function(color) {
-    document.getElementById('previewHighlight').style.color = color;
+    const el = document.getElementById('previewHighlight');
+    if (el) el.style.color = color;
+    
+    document.querySelectorAll('.preview-highlight').forEach(highlight => highlight.style.color = color);
 }
 
 window.updateCTAColor = function(color) {
