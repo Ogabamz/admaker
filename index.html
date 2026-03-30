@@ -74,7 +74,7 @@
                     <div class="upload-zone rounded-lg p-4 text-center cursor-pointer relative overflow-hidden group"
                         onclick="document.getElementById('heroUpload').value=null; document.getElementById('heroUpload').click()" ondrop="dropHandler(event, 'hero')"
                         ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)">
-                        <input type="file" id="heroUpload" accept="image/*" capture="environment" class="hidden"
+                        <input type="file" id="heroUpload" accept="image/*" class="hidden"
                             onchange="handleImageUpload(this, 'hero')">
                         <div id="heroPreview" class="hidden relative">
                             <img id="heroImg" class="w-full h-32 object-cover rounded-lg">
