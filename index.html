@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketing Asset Generator</title>
+    <link rel="manifest" href="./manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="gradient-bg text-white min-h-screen">
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+
+        <!-- EDITOR PANEL -->
+        <div
+            class="w-full lg:w-[400px] bg-slate-900/95 backdrop-blur-xl border-r border-slate-700 flex flex-col h-screen overflow-hidden">
+
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-700 bg-slate-900/50">
+                <div class="flex items-center gap-3 mb-2">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg text-white">Asset Generator</h1>
+                        <p class="text-xs text-slate-400">Create marketing materials</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Form Area -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+
+                <!-- Headline Section -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                        Headline
+                    </label>
+                    <textarea id="headlineInput" rows="3"
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none text-lg font-bold leading-tight"
+                        placeholder="Enter your headline...">THE 'OGA' OF THE HOUSE CANNOT AFFORD TO BREAK DOWN.</textarea>
+                    <div class="flex gap-2">
+                        <button onclick="formatText('uppercase')"
+                            class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-xs font-medium transition">UPPERCASE</button>
+                        <button onclick="formatText('titlecase')"
+                            class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-xs font-medium transition">Title
+                            Case</button>
+                    </div>
+                </div>
+
+                <!-- Hero Image Upload -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Hero Image
+                    </label>
+                    <div class="upload-zone rounded-lg p-4 text-center cursor-pointer relative overflow-hidden group"
+                        onclick="document.getElementById('heroUpload').click()" ondrop="dropHandler(event, 'hero')"
+                        ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)">
+                        <input type="file" id="heroUpload" accept="image/*" capture="environment" class="hidden"
+                            onchange="handleImageUpload(this, 'hero')">
+                        <div id="heroPreview" class="hidden relative">
+                            <img id="heroImg" class="w-full h-32 object-cover rounded-lg">
+                            <button onclick="event.stopPropagation(); removeImage('hero')"
+                                class="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white text-xs shadow-lg">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="heroPlaceholder" class="space-y-2">
+                            <div
+                                class="w-12 h-12 mx-auto bg-slate-700 rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <p class="text-sm text-slate-400">Tap to upload from phone</p>
+                            <p class="text-xs text-slate-500">or drag & drop</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo Upload -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                        </svg>
+                        Brand Logo
+                    </label>
+                    <div class="flex gap-3">
+                        <div class="upload-zone flex-1 rounded-lg p-3 text-center cursor-pointer relative overflow-hidden"
+                            onclick="document.getElementById('logoUpload').click()" ondrop="dropHandler(event, 'logo')"
+                            ondragover="dragOverHandler(event)">
+                            <input type="file" id="logoUpload" accept="image/*" class="hidden"
+                                onchange="handleImageUpload(this, 'logo')">
+                            <div id="logoPreview" class="hidden relative">
+                                <img id="logoImg" class="w-12 h-12 object-contain mx-auto rounded-full">
+                            </div>
+                            <div id="logoPlaceholder" class="space-y-1">
+                                <svg class="w-6 h-6 mx-auto text-slate-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="text-xs text-slate-400">Logo</p>
+                            </div>
+                        </div>
+                        <input type="text" id="brandName"
+                            class="flex-1 bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                            placeholder="Brand Name" value="NATURAL HEART CARE">
+                    </div>
+                </div>
+
+                <!-- Body Text -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Body Text
+                    </label>
+                    <textarea id="bodyInput" rows="4"
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none text-sm leading-relaxed"
+                        placeholder="Enter body text...">Your family relies on your strength. Natural Heart Care gives you the internal engine overhaul you need to stay active, productive, and in charge for them.</textarea>
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs text-slate-400">Highlight color:</label>
+                        <input type="color" id="highlightColor" value="#facc15"
+                            class="w-8 h-8 rounded cursor-pointer bg-transparent border-0"
+                            onchange="updateHighlightColor(this.value)">
+                    </div>
+                </div>
+
+                <!-- Product Image -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                        Product Image
+                    </label>
+                    <div class="upload-zone rounded-lg p-4 text-center cursor-pointer relative overflow-hidden"
+                        onclick="document.getElementById('productUpload').click()"
+                        ondrop="dropHandler(event, 'product')" ondragover="dragOverHandler(event)">
+                        <input type="file" id="productUpload" accept="image/*" class="hidden"
+                            onchange="handleImageUpload(this, 'product')">
+                        <div id="productPreview" class="hidden relative">
+                            <img id="productImg" class="w-full h-24 object-contain rounded-lg">
+                            <button onclick="event.stopPropagation(); removeImage('product')"
+                                class="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white text-xs shadow-lg">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="productPlaceholder" class="space-y-2">
+                            <svg class="w-8 h-8 mx-auto text-slate-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p class="text-xs text-slate-400">Upload product image</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="input-group space-y-2">
+                    <label
+                        class="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                        </svg>
+                        Call to Action
+                    </label>
+                    <input type="text" id="ctaInput"
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-semibold"
+                        placeholder="CTA Text" value="START YOUR HEART CARE JOURNEY">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs text-slate-500 block mb-1">Button Color</label>
+                            <input type="color" id="ctaColor" value="#10b981"
+                                class="w-full h-10 rounded cursor-pointer bg-transparent"
+                                onchange="updateCTAColor(this.value)">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 block mb-1">Text Color</label>
+                            <select id="ctaTextColor"
+                                class="w-full bg-slate-800 border border-slate-600 rounded p-2 text-sm text-white"
+                                onchange="updateCTATextColor(this.value)">
+                                <option value="white">White</option>
+                                <option value="black">Black</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website -->
+                <div class="input-group space-y-2">
+                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Website URL</label>
+                    <input type="text" id="websiteInput"
+                        class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm"
+                        placeholder="yourwebsite.com" value="naturalheartcare.com.ng">
+                </div>
+
+                <!-- Template Settings -->
+                <div class="input-group space-y-2">
+                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Template Style</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="changeTemplate('dark')"
+                            class="p-2 bg-slate-800 border-2 border-emerald-500 rounded-lg text-xs font-medium hover:bg-slate-700 transition">Dark
+                            Navy</button>
+                        <button onclick="changeTemplate('green')"
+                            class="p-2 bg-emerald-900 border-2 border-transparent rounded-lg text-xs font-medium hover:bg-emerald-800 transition">Forest</button>
+                        <button onclick="changeTemplate('purple')"
+                            class="p-2 bg-purple-900 border-2 border-transparent rounded-lg text-xs font-medium hover:bg-purple-800 transition">Royal</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p-6 border-t border-slate-700 bg-slate-900/50 space-y-3">
+                <button onclick="downloadImage()"
+                    class="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold py-3 rounded-lg shadow-lg transform hover:scale-[1.02] transition flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download Asset
+                </button>
+                <button onclick="resetTemplate()"
+                    class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2 rounded-lg transition text-sm">
+                    Reset to Default
+                </button>
+            </div>
+        </div>
+
+        <!-- PREVIEW PANEL -->
+        <div class="flex-1 bg-slate-950 flex items-center justify-center p-8 pattern-overlay relative overflow-hidden">
+
+            <!-- Background decoration -->
+            <div
+                class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5 pointer-events-none">
+            </div>
+
+            <!-- The Actual Ad Preview -->
+            <div id="adContainer"
+                class="w-[360px] h-[640px] bg-[#0B2A3A] text-white rounded-2xl overflow-hidden preview-shadow relative transform transition-all duration-300 hover:scale-[1.02] flex flex-col shrink-0">
+
+                <!-- Decorative corners -->
+                <div
+                    class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-emerald-400/20 to-transparent pointer-events-none">
+                </div>
+                <div
+                    class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-yellow-400/20 to-transparent pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-yellow-400 to-emerald-400 z-50">
+                </div>
+
+                <!-- HEADER -->
+                <div class="px-5 pt-5 pb-3 relative shrink-0">
+                    <div class="absolute top-2 right-2 w-16 h-16 opacity-10">
+                        <svg viewBox="0 0 100 100" fill="currentColor">
+                            <path d="M50 0 L100 50 L50 100 L0 50 Z" />
+                        </svg>
+                    </div>
+                    <h1 id="previewHeadline" class="text-[1.7rem] font-extrabold leading-[1.1] tracking-tight line-clamp-3">
+                        THE 'OGA' OF THE HOUSE CANNOT AFFORD TO BREAK DOWN.
+                    </h1>
+                </div>
+
+                <!-- HERO IMAGE WITH LAYERED PRODUCT -->
+                <div class="relative shrink-0 h-[240px] overflow-hidden bg-[#0B2A3A]">
+                    <!-- DRAGGABLE HERO IMAGE -->
+                    <div id="heroTransformContainer" class="absolute inset-0 cursor-move touch-none flex items-center justify-center transform-gpu" style="transform: scale(1.3) translate(0px, 0px);">
+                        <img id="previewHero" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&q=80"
+                            class="w-full h-full object-cover pointer-events-none">
+                    </div>
+                    <!-- OVERLAYS (Must ignore pointer events so we can drag the hero) -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0B2A3A] via-transparent to-transparent z-0 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+
+                    <!-- Decorative overlay pattern -->
+                    <div class="absolute inset-0 opacity-20 z-0 pointer-events-none"
+                        style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px);">
+                    </div>
+
+                    <!-- LAYERED PRODUCT IMAGE -->
+                    <div id="productLayer" class="absolute bottom-2 right-2 z-20 cursor-move touch-none" style="transform: translate(0px, 0px);">
+                        <div class="relative group">
+                            <div class="absolute -inset-2 bg-emerald-400/20 rounded-full blur-xl"></div>
+                            <img id="previewProduct"
+                                src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80"
+                                class="h-28 object-contain relative z-10 drop-shadow-2xl pointer-events-none">
+                            <div class="absolute -inset-1 border-2 border-dashed border-white/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="px-5 pb-5 flex-1 flex flex-col justify-between relative">
+
+                    <!-- Decorative element -->
+                    <div
+                        class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent">
+                    </div>
+
+                    <!-- LOGO & TEXT AREA -->
+                    <div class="flex-1 flex flex-col justify-start">
+                        <!-- LOGO -->
+                        <div class="flex items-center gap-3 pb-2 border-b border-white/10 mb-2">
+                            <div
+                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden shrink-0">
+                                <img id="previewLogo" src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+                                    class="w-6 h-6 object-contain">
+                            </div>
+                            <div>
+                                <span id="previewBrand" class="font-bold text-[15px] tracking-wide line-clamp-1">NATURAL HEART CARE</span>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                                    <span class="text-[9px] text-emerald-400 uppercase tracking-wider">Verified</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BODY TEXT -->
+                        <p id="previewBody" class="text-[13px] leading-snug text-slate-200 line-clamp-4">
+                            Your family relies on your strength. Natural Heart Care gives you the
+                            <span id="previewHighlight" class="text-yellow-400 font-semibold">internal engine
+                                overhaul</span>
+                            you need to stay active, productive, and in charge for them.
+                        </p>
+                    </div>
+
+                    <!-- BOTTOM SECTION (CTA & WEB) -->
+                    <div class="shrink-0 mt-3 space-y-2">
+                        <!-- CTA BUTTON -->
+                        <button id="previewCTA"
+                            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-full transition shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 group text-sm">
+                            <span id="previewCTAText">START YOUR HEART CARE JOURNEY</span>
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+
+                        <!-- WEBSITE & BADGE -->
+                        <div class="flex items-center justify-between">
+                            <p id="previewWebsite"
+                                class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">
+                                naturalheartcare.com.ng
+                            </p>
+
+                            <!-- Trust Badge -->
+                            <div class="inline-flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-0.5 rounded-full border border-white/20">
+                                <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-[8px] font-semibold text-white">NAFDAC COMPLIANT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Size indicator -->
+            <div
+                class="absolute bottom-4 right-4 bg-slate-800/80 backdrop-blur px-4 py-2 rounded-full text-xs text-slate-400 border border-slate-700">
+                1080 × 1920 px • Instagram Poster (9:16)
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>
