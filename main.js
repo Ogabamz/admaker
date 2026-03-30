@@ -50,6 +50,8 @@ function updateImagePreview(type, src) {
         document.getElementById('productImg').src = src;
         document.getElementById('productPreview').classList.remove('hidden');
         document.getElementById('productPlaceholder').classList.add('hidden');
+        const layer = document.getElementById('productLayer');
+        if(layer) layer.classList.remove('hidden');
     }
 }
 
@@ -60,10 +62,12 @@ window.removeImage = function(type) {
         document.getElementById('heroPlaceholder').classList.remove('hidden');
         document.getElementById('heroUpload').value = '';
     } else if (type === 'product') {
-        document.getElementById('previewProduct').src = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80';
+        document.getElementById('previewProduct').src = '';
         document.getElementById('productPreview').classList.add('hidden');
         document.getElementById('productPlaceholder').classList.remove('hidden');
         document.getElementById('productUpload').value = '';
+        const layer = document.getElementById('productLayer');
+        if(layer) layer.classList.add('hidden');
     }
 }
 

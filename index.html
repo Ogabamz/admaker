@@ -71,7 +71,7 @@
                         Hero Image
                     </label>
                     <div class="upload-zone rounded-lg p-4 text-center cursor-pointer relative overflow-hidden group"
-                        onclick="document.getElementById('heroUpload').click()" ondrop="dropHandler(event, 'hero')"
+                        onclick="document.getElementById('heroUpload').value=null; document.getElementById('heroUpload').click()" ondrop="dropHandler(event, 'hero')"
                         ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)">
                         <input type="file" id="heroUpload" accept="image/*" capture="environment" class="hidden"
                             onchange="handleImageUpload(this, 'hero')">
@@ -114,7 +114,7 @@
                     </label>
                     <div class="flex gap-3">
                         <div class="upload-zone flex-1 rounded-lg p-3 text-center cursor-pointer relative overflow-hidden"
-                            onclick="document.getElementById('logoUpload').click()" ondrop="dropHandler(event, 'logo')"
+                            onclick="document.getElementById('logoUpload').value=null; document.getElementById('logoUpload').click()" ondrop="dropHandler(event, 'logo')"
                             ondragover="dragOverHandler(event)">
                             <input type="file" id="logoUpload" accept="image/*" class="hidden"
                                 onchange="handleImageUpload(this, 'logo')">
@@ -168,7 +168,7 @@
                         Product Image
                     </label>
                     <div class="upload-zone rounded-lg p-4 text-center cursor-pointer relative overflow-hidden"
-                        onclick="document.getElementById('productUpload').click()"
+                        onclick="document.getElementById('productUpload').value=null; document.getElementById('productUpload').click()"
                         ondrop="dropHandler(event, 'product')" ondragover="dragOverHandler(event)">
                         <input type="file" id="productUpload" accept="image/*" class="hidden"
                             onchange="handleImageUpload(this, 'product')">
@@ -318,11 +318,11 @@
                     </div>
 
                     <!-- LAYERED PRODUCT IMAGE -->
-                    <div id="productLayer" class="absolute bottom-2 right-2 z-20 cursor-move touch-none" style="transform: translate(0px, 0px);">
+                    <div id="productLayer" class="absolute bottom-2 right-2 z-20 cursor-move touch-none hidden" style="transform: translate(0px, 0px);">
                         <div class="relative group">
                             <div class="absolute -inset-2 bg-emerald-400/20 rounded-full blur-xl"></div>
                             <img id="previewProduct"
-                                src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80"
+                                src=""
                                 class="h-28 object-contain relative z-10 drop-shadow-2xl pointer-events-none">
                             <div class="absolute -inset-1 border-2 border-dashed border-white/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none"></div>
                         </div>
